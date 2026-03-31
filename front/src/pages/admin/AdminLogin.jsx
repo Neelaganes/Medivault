@@ -9,7 +9,7 @@ const AdminLogin = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,9 +26,8 @@ const AdminLogin = () => {
         navigate('/admin/dashboard');
       } else {
         toast.error('Access denied. Administrator privileges required.');
-        // Log them back out if they aren't admin but somehow logged in here
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        // Log them back out fully if they aren't admin but somehow logged in here
+        logout();
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
