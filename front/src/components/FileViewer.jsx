@@ -10,7 +10,7 @@ const FileViewer = ({ attachments, onClose }) => {
   const isExternalUrl = file?.filename?.startsWith('http');
   const fileUrl = isExternalUrl 
     ? file.filename 
-    : `http://localhost:5000/api/upload/${file?.filename}?token=${localStorage.getItem('token')}`;
+    : `${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/upload/${file?.filename}?token=${localStorage.getItem('token')}`;
 
   const prev = () => setCurrent((c) => Math.max(0, c - 1));
   const next = () => setCurrent((c) => Math.min(attachments.length - 1, c + 1));
